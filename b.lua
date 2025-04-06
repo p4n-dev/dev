@@ -8,7 +8,7 @@ Rayfield:Notify({
  })
 
 local Window = Rayfield:CreateWindow({
-    Name = "Rayfield Example Window",
+    Name = "v3r hub - Horrific Housing",
     Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
     LoadingTitle = "Rayfield Interface Suite",
     LoadingSubtitle = "by Sirius",
@@ -44,13 +44,11 @@ local Window = Rayfield:CreateWindow({
  local Main = Window:CreateTab("Main", 4483362458)
  local Misc = Window:CreateTab("Misc", 4483362458)
  local Teleports = Window:CreateTab("Teleports", 4483362458)
- local ['UI Settings'] = Window:CreateTab("UI Settings", 4483362458)
+ local UISettings = Window:CreateTab("UI Settings", 4483362458)
 
- local InGameGroup = Main:CreateSection("Game Settings")
- local HouseGroup = Main:CreateSection("House Settings")
- local LobbyGroup = Main:CreateSection("Lobby Settings")
- local MiscGroup = Misc:CreateSection("Misc Settings")
- local TpGroup = Teleports:CreateSection('Teleports')
+
+ local MiscGroup = Misc:CreateSection("Misc Settings", true)
+ local Teleportssd = Teleports:CreateSection('Teleports', true)
 
  --// Services
 
@@ -171,16 +169,399 @@ UserInputService.JumpRequest:Connect(function()
     end
 end)
 
+Main:CreateSection("Game Settings")
+
 if hookmetamethod then
-    InGameGroup:CreateToggle('No Explosive Damage', {
+    Main:CreateToggle({
         Name =  'No Explosive Damage',
-        CurrentValue = false,
-        Tooltip = 'Removes explosive damage from rockets etc. (Wont work for all)',
+        CurrentOption = false,
     
         Callback = function(Value)
             NoBoomDmg = Value
         end
     })
     else
-        InGameGroup:CreateLabel("Your executor does not support hookmetamethod which couldnt load this feature: No Explosive Damage", 4483362458, Color3.fromRGB(255, 255, 255), false) -- Title, Icon, Color, IgnoreTheme
+        Main:CreateLabel("Your executor does not support hookmetamethod which couldnt load this feature: No Explosive Damage", 4483362458, Color3.fromRGB(255, 255, 255), false) -- Title, Icon, Color, IgnoreTheme
     end
+
+    Main:CreateToggle({
+        Name = 'Bring All',
+        CurrentOption = false,
+    
+        Callback = function(Value)
+            BringAll = Value
+        end
+    })
+    
+    Main:CreateToggle({
+        Name = 'Auto Hit All',
+        CurrentOption = false,
+    
+        Callback = function(Value)
+            AutoHit = Value
+        end
+    })
+    
+    Main:CreateToggle({
+        Name = 'Include Lobby Players',
+        CurrentOption = false,
+    
+        Callback = function(Value)
+            IncludeLobby = Value
+        end
+    })
+    
+    Main:CreateToggle({
+        Name = 'No Hold Delay',
+        CurrentOption = false,
+    
+        Callback = function(Value)
+            nohold = Value
+        end
+    })
+    
+    Main:CreateDivider()
+    
+    Main:CreateButton({
+        Name = 'Delete Map (Easy Wins)',
+        Callback = function()
+            for i = 1, 7000 do
+                ReplicatedStorage.EventRemotes.Potion:FireServer(true)
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Hit All With Coconut (Killall)',
+        Callback = function()
+            for i, v in pairs(Players:GetPlayers()) do
+                if v ~= LocalPlayer and LocalPlayer.Character:FindFirstChild("Coconut") and v.Character:FindFirstChild("HumanoidRootPart") then
+                    local args = {
+                        [1] = v.Character.HumanoidRootPart.Position,
+                        [2] = v.Character.HumanoidRootPart,
+                        [3] = 5
+                    }
+                    
+                    LocalPlayer.Character:FindFirstChild("Coconut").throwEvent:FireServer(unpack(args))
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Spam Hit All With Snowball (Killall)',
+        Callback = function()
+            for i, v in pairs(Players:GetPlayers()) do
+                if v ~= LocalPlayer and LocalPlayer.Character:FindFirstChild("Snowball") and v.Character:FindFirstChild("HumanoidRootPart") then
+                    local args = {
+                        [1] = v.Character.HumanoidRootPart.Position,
+                        [2] = v.Character.HumanoidRootPart,
+                        [3] = 5
+                    }
+                    
+                    LocalPlayer.Character:FindFirstChild("Snowball").remote:FireServer(unpack(args))
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Spam Hit All With Paintball Gun (Killall)',
+        Callback = function()
+            for i, v in pairs(Players:GetPlayers()) do
+                if v ~= LocalPlayer and LocalPlayer.Character:FindFirstChild("PaintballGun") and v.Character:FindFirstChild("HumanoidRootPart") then
+                    local args = {
+                        [1] = v.Character.HumanoidRootPart.Position,
+                        [2] = v.Character.HumanoidRootPart,
+                        [3] = 5
+                    }
+                    
+                    LocalPlayer.Character:FindFirstChild("PaintballGun").remote:FireServer(unpack(args))
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Spam Hit All With Thunder Staff (Killall)',
+        Callback = function()
+            for i, v in pairs(Players:GetPlayers()) do
+                if v ~= LocalPlayer and LocalPlayer.Character:FindFirstChild("Thunder Staff") and v.Character:FindFirstChild("HumanoidRootPart") then
+                    local args = {
+                        [1] = v.Character.HumanoidRootPart.Position,
+                        [2] = v.Character.HumanoidRootPart,
+                        [3] = 5
+                    }
+                    
+                    LocalPlayer.Character:FindFirstChild("Thunder Staff").RemoteEvent:FireServer(unpack(args))
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Drink random potion',
+        Callback = function()
+            ReplicatedStorage.EventRemotes.Potion:FireServer(true)
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Expand Plate Size',
+        Callback = function()
+            local Plates = Workspace.Plates[LocalPlayer.Name]
+            if Plates then
+                local Plate = Plates:FindFirstChild("Plate")
+                if Plate then
+                    Plate.Size = Vector3.new(250, 1, 250)
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Spleef All Tiles',
+        Callback = function()
+            local SpleefFolder = Workspace["Spleef Arena"]
+    
+            for i, v in next, SpleefFolder:GetChildren() do
+                if v:IsA("Part") then
+                    firetouchinterest(LocalPlayer.Character.HumanoidRootPart, v, 0)
+                    firetouchinterest(LocalPlayer.Character.HumanoidRootPart, v, 1)
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Remove Lava Kill Part',
+        Callback = function()
+            local LavaPlate = Workspace.LavaPlate
+            LavaPlate:FindFirstChild("TouchInterest"):Destroy()
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Remove Spinner Kill Part',
+        Callback = function()
+            local Spinnnnnnnnnner = Workspace.Spinner.Sweeper
+            Spinnnnnnnnnner:FindFirstChild("TouchInterest"):Destroy()
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Remove Acid Flood Kill Part',
+        Callback = function()
+            local KillPart = Workspace.Kill
+            KillPart:FindFirstChild("TouchInterest"):Destroy()
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Remove Sticky Part',
+        Callback = function()
+            for i, v in Players:GetPlayers() do
+                if v ~= LocalPlayer and v.Team.Name == "Playing" then
+                    local StickyPart = Workspace.Plates[v.Name] or workspace.Plates.Plate
+                    if StickyPart then
+                        StickyPart:FindFirstChild("slime"):Destroy()
+                    end
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+
+    Main:CreateSection("Lobby Settings", true)
+    
+    Main:CreateButton({
+        Name = 'Spleef Lobby Tiles',
+        Callback = function()
+            for i, v in next, LobbySpleef:GetChildren() do
+                if v:IsA("Part") then
+                    firetouchinterest(LocalPlayer.Character.HumanoidRootPart, v, 0)
+                    firetouchinterest(LocalPlayer.Character.HumanoidRootPart, v, 1)
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Claim all Obby Rewards',
+        Callback = function()
+            for i, v in next, Obby.ImportantParts:GetChildren() do
+                firetouchinterest(LocalPlayer.Character.HumanoidRootPart, v, 0)
+                firetouchinterest(LocalPlayer.Character.HumanoidRootPart, v, 1)
+            end
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateButton({
+        Name = 'Dupe Eggs',
+        Callback = function()
+            local Eggs = LocalPlayer.Eggs
+            for i, v in next, Eggs:GetChildren() do
+                if v:IsA("NumberValue") then
+                    for eggy = 1, 4 do
+                        v:Clone().Parent = Eggs
+                    end
+                    Library:Notify("Duplicated "..v.Name, 5)
+                end
+            end
+        end,
+        DoubleClick = false,
+    })
+
+    Main:CreateSection("House Settings", true)
+    
+    Main:AddDropdown('Furniture Selector', {
+        Options = furnitures,
+        CurrentOption = "",
+        MultipleOptions = false,
+        Name = 'Furniture Selector',
+    
+        Callback = function(Value)
+            Furniture = Value
+        end
+    })
+    
+    Main:AddDropdown('Slot Selector', {
+        Options = { 'Furniture1', 'Furniture2', 'Furniture3' },
+        CurrentOption = "Furniture1",
+        MultipleOptions = false,
+        Name = 'Slot Selector',
+    
+        Callback = function(Value)
+            FurnitureSlot = Value
+        end
+    })
+    
+    Main:CreateButton({
+        Name = 'Equip Furniture',
+        Callback = function()
+            ReplicatedStorage:WaitForChild("FurnitureChanged"):FireServer(FurnitureSlot, Furniture)
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateDivider()
+    
+    Main:AddDropdown('Ornaments Selector', {
+        Options = ornaments,
+        CurrentOption = "",
+        MultipleOptions = false,
+        Name = 'Ornaments Selector',
+    
+        Callback = function(Value)
+            Ornament = Value
+        end
+    })
+    
+    Main:AddDropdown('Slot Selector', {
+        Options = { 'Ornament1', 'Ornament2', 'Ornament3' },
+        CurrentOption = "Ornament1",
+        MultipleOptions = false,
+        Name = 'Slot Selector',
+    
+        Callback = function(Value)
+            OrnamentSlot = Value
+        end
+    })
+    
+    Main:CreateButton({
+        Name = 'Equip Ornament',
+        Callback = function()
+            ReplicatedStorage:WaitForChild("OrnamentChanged"):FireServer(OrnamentSlot, Ornament)
+        end,
+        DoubleClick = false,
+    })
+    
+    Main:CreateDivider()
+    
+    Main:AddLabel('House Color'):AddColorPicker('House Color', {
+        CurrentOption = Color3.fromRGB(255, 255, 255),
+        Title = 'House Color Picker',
+    
+        Callback = function(Value)
+            HouseColor = Value
+        end
+    })
+    
+    Main:CreateButton({
+        Name = 'Change House Color',
+        Callback = function()
+            game:GetService("ReplicatedStorage"):WaitForChild("HouseColour"):FireServer(HouseColor)        
+        end,
+        DoubleClick = false,
+    })
+    
+    MiscGroup:CreateToggle('InfJump', {
+        Name = 'Infinite Jump',
+        CurrentOption = false,
+        Callback = function(Value)
+            InfJump = Value
+        end
+    })
+    
+    Teleports:CreateButton({
+        Name = 'Tp under obby start',
+        Callback = function()
+            LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2.914475202560425, -12.149168014526367, -62.4456787109375)
+        end,
+        DoubleClick = false,
+    })
+    
+    Teleports:CreateButton({
+        Name = 'Tp To Illumiati',
+        Callback = function()
+            LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0.36450493335723877, 5.543025016784668, -16.87293243408203)
+        end,
+        DoubleClick = false,
+    })
+    
+    Teleports:CreateButton({
+        Name = 'Tp To Spec Button',
+        Callback = function()
+            LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(7.635685443878174, 5.498024940490723, -3.420691967010498)
+        end,
+        DoubleClick = false,
+    })
+    
+    Teleports:CreateButton({
+        Name = 'Tp Infront Of Obby',
+        Callback = function()
+            LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1.1615108251571655, 17.542022705078125, -109.22512817382812)
+        end,
+        DoubleClick = false,
+    })
+    
+    Teleports:CreateButton({
+        Name = 'Tp To Obby Victory1',
+        Callback = function()
+            local Victory1 = Obby.ImportantParts.Victory1
+            LocalPlayer.Character.HumanoidRootPart.CFrame = Victory1.CFrame
+        end,
+        DoubleClick = false,
+    })
+    
+    Teleports:CreateButton({
+        Name = 'Tp To Obby Victory2',
+        Callback = function()
+            local Victory1 = Obby.ImportantParts.Victory2
+            LocalPlayer.Character.HumanoidRootPart.CFrame = Victory2.CFrame
+        end,
+        DoubleClick = false,
+    })
